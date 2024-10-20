@@ -19,11 +19,9 @@ namespace P2PNodeServer
                     await client.ConnectAsync(IPAddress.Parse(ipAddress), port);
                     NetworkStream stream = client.GetStream();
 
-                    // Wyślij wiadomość
                     byte[] data = Encoding.UTF8.GetBytes(message);
                     await stream.WriteAsync(data, 0, data.Length);
 
-                    // Odbierz odpowiedź
                     byte[] buffer = new byte[1024];
                     int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
                     string response = Encoding.UTF8.GetString(buffer, 0, bytesRead);

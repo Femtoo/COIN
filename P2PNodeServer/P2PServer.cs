@@ -47,7 +47,6 @@ namespace P2PNodeServer
                 string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                 Console.WriteLine($"Otrzymano wiadomość: {message}");
 
-                // Odpowiedz klientowi
                 byte[] response = Encoding.UTF8.GetBytes("Wiadomość odebrana.");
                 await stream.WriteAsync(response, 0, response.Length);
             }
