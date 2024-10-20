@@ -1,0 +1,35 @@
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: ${NETWORK_SUBNET}
+          gateway: ${NETWORK_GATEWAY}
+
+services:
+  app1:
+    build:
+      context: .
+      dockerfile: ${DOCKERFILE_PATH}
+    ports:
+      - "8080:8080"
+    entrypoint: ["dotnet", "P2PNodeAPI.dll", "${NODE_2_IP}"]
+    networks:
+      app-network:
+        ipv4_address: ${NODE_1_IP}
+
+  app2:
+    build:
+      context: .
+      dockerfile: ${DOCKERFILE_PATH}
+    environment:
+      - NODE_NAME=APP2
+    ports:
+      - "8081:8080"
+    entrypoint: ["dotnet", "P2PNodeAPI.dll", "${NODE_1_IP}"]
+    depends_on:
+      - app1
+    networks:
+      app-network:
+        ipv4_address: ${NODE_2_IP}

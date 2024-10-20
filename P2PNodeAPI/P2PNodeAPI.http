@@ -1,0 +1,6 @@
+@P2PNodeAPI_HostAddress = http://localhost:5026
+
+GET {{P2PNodeAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
